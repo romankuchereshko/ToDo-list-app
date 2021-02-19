@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>Success</title>
+</head>
+<body>
+<div th:include="header"></div>
+<div class="container">
+    <h1>WELCOME!</h1>
+    <form action="/auth/logout" method="post">
+        <p>
+            <input type="submit" value="Logout" class="btn btn-primary"/>
+        </p>
+    </form>
+</div>
+</body>
+</html>

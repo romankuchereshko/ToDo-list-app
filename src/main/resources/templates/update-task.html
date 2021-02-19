@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>Update Task</title>
+</head>
+<body>
+<div th:replace="header"></div>
+<div class="col-md-offset-2 col-sm-6">
+    <h2>Update Task</h2>
+
+    <form class="form-horizontal" th:object="${task}" method="post">
+        <div class="form-group">
+            <label class="control-label" for="id">Id:</label>
+            <input class="form-control" type="text" th:field="*{id}" id="id" th:value="*{id}" disabled/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="name">Name:</label>
+            <input class="form-control" type="text" th:field="*{name}" th:value="*{name}" id="name"/>
+            <small class="form-text text-muted" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="priority">Priority:</label>
+            <select class="form-control" name="priority" id="priority">
+                        <span th:each="priority : ${priorities}">
+                            <option th:if="${priority.name().equals(task.priority)}" th:value="${priority}"
+                                    th:selected="${true}"
+                                    th:text="${priority.name().substring(0, 1) + priority.name().substring(1).toLowerCase()}"/>
+                            <option th:unless="${priority.name() == task.priority}" th:value="${priority}"
+                                    th:text="${priority.name().substring(0, 1) + priority.name().substring(1).toLowerCase()}"/>
+                        </span>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="state">Status:</label>
+            <select class="form-control" name="stateId" id="state">
+                        <span th:each="state : ${states}">
+                            <option th:if="${state.id == task.stateId}" th:value="${state.id}" th:selected="${true}"
+                                    th:text="${state.name}"/>
+                            <option th:unless="${state.id == task.stateId}" th:value="${state.id}"
+                                    th:text="${state.name}"/>
+                        </span>
+            </select>
+        </div>
+        <input class="btn btn-info" type="submit" value="Update"/>
+        <input class="btn btn" type="reset" value="Clear"/>
+
+
+        <input type="hidden" name="id" th:value="*{id}">
+        <input type="hidden" name="todoId" th:value="${task.todoId}">
+    </form>
+</div>
+<a th:href="@{|/todos/${task.todoId}/tasks|}">Go to Task List</a>
+</body>
+</html>

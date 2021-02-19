@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>Update existing To-Do</title>
+</head>
+<body>
+<div th:replace="header"></div>
+<div class="col-md-offset-2 col-sm-6">
+    <h2>Update existing To-Do</h2>
+    <form class="form-horizontal" th:object="${todo}" method="post">
+        <div class="form-group">
+            <label class="control-label" for="id">Id:</label>
+            <input class="form-control" type="text" th:field="*{id}" id="id" th:value="*{id}" disabled/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="title">Title:</label>
+            <input class="form-control" type="text" th:field="*{title}" id="title" th:value="*{title}"/>
+            <small class="form-text text-muted" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
+        </div>
+        <input class="btn btn-info" type="submit" value="Update"/>
+        <input class="btn btn" type="reset" value="Clear"/>
+        <input type="hidden" name="id" th:value="*{id}">
+        <input type="hidden" th:field="*{createdAt}" th:value="*{createdAt}">
+    </form>
+</div>
+<a th:href="@{|/todos/all/users/${todo.owner.id}|}">Go to To-Do List</a>
+</body>
+</html>
